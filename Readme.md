@@ -1,7 +1,7 @@
 # Проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Alexandra Kovalchuk](https://up.htmlacademy.ru/ecmascript/13/user/1305465).
-* Наставник: `Неизвестно`.
+* Наставник: [Максим Сёмушкин](https://up.htmlacademy.ru/ecmascript/13/user/48647).
 
 ---
 
