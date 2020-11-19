@@ -27,9 +27,9 @@ render(pageMainElement, `beforeend`, createFilmSortingTemplate());
 render(pageMainElement, `beforeend`, createFilmSectionTemplate());
 render(footerStatsElement, `beforeend`, createStatisticsTemplate());
 
-const filmListContainerElement = pageMainElement.querySelector(`.films`);
+const filmSectionElement = pageMainElement.querySelector(`.films`);
 
-render(filmListContainerElement, `beforeend`, createFilmListTemplate());
+render(filmSectionElement, `beforeend`, createFilmListTemplate());
 
 const filmsElement = pageMainElement.querySelector(`.films-list`);
 
