@@ -1,4 +1,4 @@
-export const createMovieCardTemplate = () => {
+export const createFilmCardTemplate = () => {
   return `<article class="film-card">
     <h3 class="film-card__title">Santa Claus Conquers the Martians</h3>
     <p class="film-card__rating">2.3</p>
@@ -16,13 +16,4 @@ export const createMovieCardTemplate = () => {
       <button class="film-card__controls-item button film-card__controls-item--favorite film-card__controls-item--active" type="button">Mark as favorite</button>
     </div>
   </article>`;
-};
-
-export const createMovieListTemplate = () => {
-  return `<section class="films">
-  <section class="films-list">
-    <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
-    <div class="films-list__container"></div>
-    </section>
-  </section>`;
 };

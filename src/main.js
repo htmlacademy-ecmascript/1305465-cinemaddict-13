@@ -1,45 +1,46 @@
 import {createUserProfileTemplate} from "./view/user-profile.js";
 import {createMenuTemplate} from "./view/menu.js";
-import {createMovieListTemplate} from "./view/movie-card.js";
-import {createTopMoviesTemplate} from "./view/show-more.js";
+import {createFilmListTemplate} from "./view/film-list.js";
+import {createExtraFilmsTemplate} from "./view/extra-films.js";
 import {createShowMoreTemplate} from "./view/show-more.js";
-import {createMovieCardTemplate} from "./view/movie-card.js";
-import {createStatisticsTemplate} from "./view/show-more.js";
+import {createFilmCardTemplate} from "./view/film-card.js";
+import {createStatisticsTemplate} from "./view/statistics.js";
 import {createPopupTemplate} from "./view/popup.js";
 
 const FILMS_COUNT = 5;
 const TOP_FILMS_COUNT = 2;
 
-const renderHtml = (element, position, template) => {
+const render = (element, position, template) => {
   element.insertAdjacentHTML(position, template);
 };
 
-const pageHeader = document.querySelector(`.header`);
-const pageMain = document.querySelector(`.main`);
-const pageFooter = document.querySelector(`.footer`);
-const footerStats = pageFooter.querySelector(`.footer__statistics`);
+const pageHeaderElement = document.querySelector(`.header`);
+const pageMainElement = document.querySelector(`.main`);
+const pageFooterElement = document.querySelector(`.footer`);
+const footerStatsElement = pageFooterElement.querySelector(`.footer__statistics`);
 
-renderHtml(pageHeader, `beforeend`, createUserProfileTemplate());
-renderHtml(pageMain, `beforeend`, createMenuTemplate());
-renderHtml(pageMain, `beforeend`, createMovieListTemplate());
-renderHtml(footerStats, `beforeend`, createStatisticsTemplate());
+render(pageHeaderElement, `beforeend`, createUserProfileTemplate());
+render(pageMainElement, `beforeend`, createMenuTemplate());
+render(pageMainElement, `beforeend`, createFilmListTemplate());
+render(footerStatsElement, `beforeend`, createStatisticsTemplate());
 
-const films = pageMain.querySelector(`.films-list`);
+const filmsElement = pageMainElement.querySelector(`.films-list`);
 
-renderHtml(films, `afterend`, createTopMoviesTemplate());
-renderHtml(films, `beforeend`, createShowMoreTemplate());
+render(filmsElement, `afterend`, createExtraFilmsTemplate(`Most commented`));
+render(filmsElement, `afterend`, createExtraFilmsTemplate(`Top rated`));
+render(filmsElement, `beforeend`, createShowMoreTemplate());
 
-const filmsList = films.querySelector(`.films-list__container`);
-const topFilmsLists = pageMain.querySelectorAll(`.films-list--extra .films-list__container`);
+const filmsContainerElement = filmsElement.querySelector(`.films-list__container`);
+const extraFilmsContainerElements = pageMainElement.querySelectorAll(`.films-list--extra .films-list__container`);
 
 for (let i = 0; i < FILMS_COUNT; i++) {
-  renderHtml(filmsList, `beforeend`, createMovieCardTemplate());
+  render(filmsContainerElement, `beforeend`, createFilmCardTemplate());
 }
 
-for (let list of topFilmsLists) {
+for (let list of extraFilmsContainerElements) {
   for (let i = 0; i < TOP_FILMS_COUNT; i++) {
-    renderHtml(list, `beforeend`, createMovieCardTemplate());
+    render(list, `beforeend`, createFilmCardTemplate());
   }
 }
 
-renderHtml(pageMain, `beforeend`, createPopupTemplate());
+render(pageMainElement, `beforeend`, createPopupTemplate());
