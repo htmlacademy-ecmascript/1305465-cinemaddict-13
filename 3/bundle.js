@@ -97,9 +97,12 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _view_user_profile_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./view/user-profile.js */ "./src/view/user-profile.js");
 /* harmony import */ var _view_menu_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./view/menu.js */ "./src/view/menu.js");
-/* harmony import */ var _view_movie_card_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./view/movie-card.js */ "./src/view/movie-card.js");
-/* harmony import */ var _view_show_more_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./view/show-more.js */ "./src/view/show-more.js");
-/* harmony import */ var _view_popup_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./view/popup.js */ "./src/view/popup.js");
+/* harmony import */ var _view_film_list_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./view/film-list.js */ "./src/view/film-list.js");
+/* harmony import */ var _view_extra_films_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./view/extra-films.js */ "./src/view/extra-films.js");
+/* harmony import */ var _view_show_more_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./view/show-more.js */ "./src/view/show-more.js");
+/* harmony import */ var _view_film_card_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./view/film-card.js */ "./src/view/film-card.js");
+/* harmony import */ var _view_statistics_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./view/statistics.js */ "./src/view/statistics.js");
+/* harmony import */ var _view_popup_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./view/popup.js */ "./src/view/popup.js");
 
 
 
@@ -112,39 +115,121 @@ __webpack_require__.r(__webpack_exports__);
 const FILMS_COUNT = 5;
 const TOP_FILMS_COUNT = 2;
 
-const renderHtml = (element, position, template) => {
+const render = (element, position, template) => {
   element.insertAdjacentHTML(position, template);
 };
 
-const pageHeader = document.querySelector(`.header`);
-const pageMain = document.querySelector(`.main`);
-const pageFooter = document.querySelector(`.footer`);
-const footerStats = pageFooter.querySelector(`.footer__statistics`);
+const pageHeaderElement = document.querySelector(`.header`);
+const pageMainElement = document.querySelector(`.main`);
+const pageFooterElement = document.querySelector(`.footer`);
+const footerStatsElement = pageFooterElement.querySelector(`.footer__statistics`);
 
-renderHtml(pageHeader, `beforeend`, Object(_view_user_profile_js__WEBPACK_IMPORTED_MODULE_0__["createUserProfileTemplate"])());
-renderHtml(pageMain, `beforeend`, Object(_view_menu_js__WEBPACK_IMPORTED_MODULE_1__["createMenuTemplate"])());
-renderHtml(pageMain, `beforeend`, Object(_view_movie_card_js__WEBPACK_IMPORTED_MODULE_2__["createMovieListTemplate"])());
-renderHtml(footerStats, `beforeend`, Object(_view_show_more_js__WEBPACK_IMPORTED_MODULE_3__["createStatisticsTemplate"])());
+render(pageHeaderElement, `beforeend`, Object(_view_user_profile_js__WEBPACK_IMPORTED_MODULE_0__["createUserProfileTemplate"])());
+render(pageMainElement, `beforeend`, Object(_view_menu_js__WEBPACK_IMPORTED_MODULE_1__["createMenuTemplate"])());
+render(pageMainElement, `beforeend`, Object(_view_film_list_js__WEBPACK_IMPORTED_MODULE_2__["createFilmListTemplate"])());
+render(footerStatsElement, `beforeend`, Object(_view_statistics_js__WEBPACK_IMPORTED_MODULE_6__["createStatisticsTemplate"])());
 
-const films = pageMain.querySelector(`.films-list`);
+const filmsElement = pageMainElement.querySelector(`.films-list`);
 
-renderHtml(films, `afterend`, Object(_view_show_more_js__WEBPACK_IMPORTED_MODULE_3__["createTopMoviesTemplate"])());
-renderHtml(films, `beforeend`, Object(_view_show_more_js__WEBPACK_IMPORTED_MODULE_3__["createShowMoreTemplate"])());
+render(filmsElement, `afterend`, Object(_view_extra_films_js__WEBPACK_IMPORTED_MODULE_3__["createExtraFilmsTemplate"])(`Most commented`));
+render(filmsElement, `afterend`, Object(_view_extra_films_js__WEBPACK_IMPORTED_MODULE_3__["createExtraFilmsTemplate"])(`Top rated`));
+render(filmsElement, `beforeend`, Object(_view_show_more_js__WEBPACK_IMPORTED_MODULE_4__["createShowMoreTemplate"])());
 
-const filmsList = films.querySelector(`.films-list__container`);
-const topFilmsLists = pageMain.querySelectorAll(`.films-list--extra .films-list__container`);
+const filmsContainerElement = filmsElement.querySelector(`.films-list__container`);
+const extraFilmsContainerElements = pageMainElement.querySelectorAll(`.films-list--extra .films-list__container`);
 
 for (let i = 0; i < FILMS_COUNT; i++) {
-  renderHtml(filmsList, `beforeend`, Object(_view_movie_card_js__WEBPACK_IMPORTED_MODULE_2__["createMovieCardTemplate"])());
+  render(filmsContainerElement, `beforeend`, Object(_view_film_card_js__WEBPACK_IMPORTED_MODULE_5__["createFilmCardTemplate"])());
 }
 
-for (let list of topFilmsLists) {
+for (let list of extraFilmsContainerElements) {
   for (let i = 0; i < TOP_FILMS_COUNT; i++) {
-    renderHtml(list, `beforeend`, Object(_view_movie_card_js__WEBPACK_IMPORTED_MODULE_2__["createMovieCardTemplate"])());
+    render(list, `beforeend`, Object(_view_film_card_js__WEBPACK_IMPORTED_MODULE_5__["createFilmCardTemplate"])());
   }
 }
 
-renderHtml(pageMain, `beforeend`, Object(_view_popup_js__WEBPACK_IMPORTED_MODULE_4__["createPopupTemplate"])());
+render(pageMainElement, `beforeend`, Object(_view_popup_js__WEBPACK_IMPORTED_MODULE_7__["createPopupTemplate"])());
+
+
+/***/ }),
+
+/***/ "./src/view/extra-films.js":
+/*!*********************************!*\
+  !*** ./src/view/extra-films.js ***!
+  \*********************************/
+/*! exports provided: createExtraFilmsTemplate */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createExtraFilmsTemplate", function() { return createExtraFilmsTemplate; });
+const createExtraFilmsTemplate = (title) => {
+  return `<section class="films-list films-list--extra">
+    <h2 class="films-list__title">${title}</h2>
+    <div class="films-list__container">
+    </div>
+  </section>`;
+};
+
+
+/***/ }),
+
+/***/ "./src/view/film-card.js":
+/*!*******************************!*\
+  !*** ./src/view/film-card.js ***!
+  \*******************************/
+/*! exports provided: createFilmCardTemplate */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createFilmCardTemplate", function() { return createFilmCardTemplate; });
+const createFilmCardTemplate = () => {
+  return `<article class="film-card">
+    <h3 class="film-card__title">Santa Claus Conquers the Martians</h3>
+    <p class="film-card__rating">2.3</p>
+    <p class="film-card__info">
+      <span class="film-card__year">1964</span>
+      <span class="film-card__duration">1h 21m</span>
+      <span class="film-card__genre">Comedy</span>
+    </p>
+    <img src="./images/posters/santa-claus-conquers-the-martians.jpg" alt="" class="film-card__poster">
+    <p class="film-card__description">The Martians Momar ("Mom Martian") and Kimar ("King Martian") are worried that their children Girmar ("Girl Martian") and Bomar ("Boy Marti…</p>
+    <a class="film-card__comments">465 comments</a>
+    <div class="film-card__controls">
+      <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist" type="button">Add to watchlist</button>
+      <button class="film-card__controls-item button film-card__controls-item--mark-as-watched" type="button">Mark as watched</button>
+      <button class="film-card__controls-item button film-card__controls-item--favorite film-card__controls-item--active" type="button">Mark as favorite</button>
+    </div>
+  </article>`;
+};
+
+
+/***/ }),
+
+/***/ "./src/view/film-list.js":
+/*!*******************************!*\
+  !*** ./src/view/film-list.js ***!
+  \*******************************/
+/*! exports provided: createFilmListTemplate */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createFilmListTemplate", function() { return createFilmListTemplate; });
+const createFilmListTemplate = () => {
+  return `<ul class="sort">
+    <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
+    <li><a href="#" class="sort__button">Sort by date</a></li>
+    <li><a href="#" class="sort__button">Sort by rating</a></li>
+  </ul>
+  <section class="films">
+  <section class="films-list">
+    <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+    <div class="films-list__container"></div>
+    </section>
+  </section>`;
+};
 
 
 /***/ }),
@@ -168,55 +253,7 @@ const createMenuTemplate = () => {
       <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
     </div>
     <a href="#stats" class="main-navigation__additional">Stats</a>
-  </nav>
-  <ul class="sort">
-    <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-    <li><a href="#" class="sort__button">Sort by date</a></li>
-    <li><a href="#" class="sort__button">Sort by rating</a></li>
-  </ul>`;
-};
-
-
-/***/ }),
-
-/***/ "./src/view/movie-card.js":
-/*!********************************!*\
-  !*** ./src/view/movie-card.js ***!
-  \********************************/
-/*! exports provided: createMovieCardTemplate, createMovieListTemplate */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMovieCardTemplate", function() { return createMovieCardTemplate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createMovieListTemplate", function() { return createMovieListTemplate; });
-const createMovieCardTemplate = () => {
-  return `<article class="film-card">
-    <h3 class="film-card__title">Santa Claus Conquers the Martians</h3>
-    <p class="film-card__rating">2.3</p>
-    <p class="film-card__info">
-      <span class="film-card__year">1964</span>
-      <span class="film-card__duration">1h 21m</span>
-      <span class="film-card__genre">Comedy</span>
-    </p>
-    <img src="./images/posters/santa-claus-conquers-the-martians.jpg" alt="" class="film-card__poster">
-    <p class="film-card__description">The Martians Momar ("Mom Martian") and Kimar ("King Martian") are worried that their children Girmar ("Girl Martian") and Bomar ("Boy Marti…</p>
-    <a class="film-card__comments">465 comments</a>
-    <div class="film-card__controls">
-      <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist" type="button">Add to watchlist</button>
-      <button class="film-card__controls-item button film-card__controls-item--mark-as-watched" type="button">Mark as watched</button>
-      <button class="film-card__controls-item button film-card__controls-item--favorite film-card__controls-item--active" type="button">Mark as favorite</button>
-    </div>
-  </article>`;
-};
-
-const createMovieListTemplate = () => {
-  return `<section class="films">
-  <section class="films-list">
-    <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
-    <div class="films-list__container"></div>
-    </section>
-  </section>`;
+  </nav>`;
 };
 
 
@@ -395,33 +432,31 @@ const createPopupTemplate = () => {
 /*!*******************************!*\
   !*** ./src/view/show-more.js ***!
   \*******************************/
-/*! exports provided: createShowMoreTemplate, createStatisticsTemplate, createTopMoviesTemplate */
+/*! exports provided: createShowMoreTemplate */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createShowMoreTemplate", function() { return createShowMoreTemplate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createStatisticsTemplate", function() { return createStatisticsTemplate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTopMoviesTemplate", function() { return createTopMoviesTemplate; });
 const createShowMoreTemplate = () => {
   return `<button class="films-list__show-more">Show more</button>`;
 };
 
+
+/***/ }),
+
+/***/ "./src/view/statistics.js":
+/*!********************************!*\
+  !*** ./src/view/statistics.js ***!
+  \********************************/
+/*! exports provided: createStatisticsTemplate */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createStatisticsTemplate", function() { return createStatisticsTemplate; });
 const createStatisticsTemplate = () => {
   return `<p>130 291 movies inside</p>`;
-};
-
-const createTopMoviesTemplate = () => {
-  return `<section class="films-list films-list--extra">
-    <h2 class="films-list__title">Top rated</h2>
-    <div class="films-list__container">
-    </div>
-  </section>
-  <section class="films-list films-list--extra">
-    <h2 class="films-list__title">Most commented</h2>
-    <div class="films-list__container">
-    </div>
-  </section>`;
 };
 
 
