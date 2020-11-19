@@ -1,7 +1,8 @@
 import {createUserProfileTemplate} from "./view/user-profile.js";
 import {createMenuTemplate} from "./view/menu.js";
+import {createFilmSectionTemplate} from "./view/film-section.js";
 import {createFilmListTemplate} from "./view/film-list.js";
-import {createExtraFilmTemplate} from "./view/extra-film.js";
+import {createExtraFilmListTemplate} from "./view/extra-film-list.js";
 import {createShowMoreTemplate} from "./view/show-more.js";
 import {createFilmCardTemplate} from "./view/film-card.js";
 import {createStatisticsTemplate} from "./view/statistics.js";
@@ -21,17 +22,22 @@ const footerStatsElement = pageFooterElement.querySelector(`.footer__statistics`
 
 render(pageHeaderElement, `beforeend`, createUserProfileTemplate());
 render(pageMainElement, `beforeend`, createMenuTemplate());
-render(pageMainElement, `beforeend`, createFilmListTemplate());
+render(pageMainElement, `beforeend`, createFilmSectionTemplate());
 render(footerStatsElement, `beforeend`, createStatisticsTemplate());
+
+const filmListContainerElement = pageMainElement.querySelector(`.films`);
+
+render(filmListContainerElement, `beforeend`, createFilmListTemplate());
 
 const filmsElement = pageMainElement.querySelector(`.films-list`);
 
-render(filmsElement, `afterend`, createExtraFilmTemplate(`Most commented`));
-render(filmsElement, `afterend`, createExtraFilmTemplate(`Top rated`));
+render(filmsElement, `afterend`, createExtraFilmListTemplate(`Most commented`));
+render(filmsElement, `afterend`, createExtraFilmListTemplate(`Top rated`));
 render(filmsElement, `beforeend`, createShowMoreTemplate());
 
 const filmsContainerElement = filmsElement.querySelector(`.films-list__container`);
 const extraFilmsContainerElements = pageMainElement.querySelectorAll(`.films-list--extra .films-list__container`);
+
 
 for (let i = 0; i < FILMS_COUNT; i++) {
   render(filmsContainerElement, `beforeend`, createFilmCardTemplate());
