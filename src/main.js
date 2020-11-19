@@ -1,5 +1,6 @@
 import {createUserProfileTemplate} from "./view/user-profile.js";
 import {createMenuTemplate} from "./view/menu.js";
+import {createFilmSortingTemplate} from "./view/sorting.js";
 import {createFilmSectionTemplate} from "./view/film-section.js";
 import {createFilmListTemplate} from "./view/film-list.js";
 import {createExtraFilmListTemplate} from "./view/extra-film-list.js";
@@ -22,6 +23,7 @@ const footerStatsElement = pageFooterElement.querySelector(`.footer__statistics`
 
 render(pageHeaderElement, `beforeend`, createUserProfileTemplate());
 render(pageMainElement, `beforeend`, createMenuTemplate());
+render(pageMainElement, `beforeend`, createFilmSortingTemplate());
 render(pageMainElement, `beforeend`, createFilmSectionTemplate());
 render(footerStatsElement, `beforeend`, createStatisticsTemplate());
 
