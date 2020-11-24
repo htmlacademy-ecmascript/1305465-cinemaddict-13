@@ -1,3 +1,5 @@
+import {films} from "../main.js";
+
 export const createStatisticsTemplate = () => {
-  return `<p>130 291 movies inside</p>`;
+  return `<p>${films.length} movies inside</p>`;
 };
