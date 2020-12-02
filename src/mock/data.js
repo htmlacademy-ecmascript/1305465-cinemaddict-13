@@ -1,29 +1,9 @@
 import dayjs from "dayjs";
 
-const getRandomNumber = (max, min = 0) => {
-  return Math.floor(Math.random() * (max - min) + min);
-};
-
-const getRandomArray = (array) => {
-  let newArray = [];
-
-  array.forEach((item, i, arr) => {
-    newArray[i] = arr[Math.floor(Math.random() * arr.length)];
-  });
-
-  return newArray;
-};
-
-const getRandomElement = (elements) => {
-  return elements[Math.floor(Math.random() * elements.length)];
-};
-
-const getRandomInteger = (b = 1, a = 0) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-
-  return Math.floor(lower + Math.random() * (upper - lower + 1));
-};
+import {getRandomNumber} from "./util.js";
+import {getRandomArray} from "./util.js";
+import {getRandomElement} from "./util.js";
+import {getRandomInteger} from "./util.js";
 
 const generateDate = () => {
   return dayjs().startOf(`year`).add(getRandomNumber(0, 300), `day`).format(`D MMMM YYYY`);
@@ -96,7 +76,7 @@ const generateGenres = () => {
   return randomGenres.slice(0, 3);
 };
 
-const generateComments = (numberOfComments) => {
+export const generateComments = (numberOfComments = getRandomNumber(1, 5)) => {
   const texts = [
     `Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.`,
     `Sed sed nisi sed augue convallis suscipit in sed felis.`,
@@ -148,13 +128,12 @@ const getFavoritesStatus = () => {
 export const generateFilmCard = () => {
   getWatchedStatus();
 
-  let addedComments = generateComments(2);
   return {
+    id: generateTitle() + generatePoster() + getRandomNumber(0, 100),
     title: generateTitle(),
     poster: generatePoster(),
-    description: generateDescription(),
-    numberOfComments: addedComments.length,
-    comment: addedComments,
+    fullDescription: generateDescription().toString(),
+    commentsCount: getRandomNumber(1, 9),
     rating: getRandomNumber(1, 5) + `.` + getRandomNumber(0, 9),
     releaseDate: generateDate(),
     year: getRandomNumber(1950, 2020),

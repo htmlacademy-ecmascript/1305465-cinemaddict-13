@@ -1,29 +1,8 @@
-const createGenresTemplate = (genres) => {
-  return genres.map((genre) => `<span class="film-details__genre">${genre}</span>`).join(``);
-};
+import {createGenresTemplate} from "./genres.js";
+import {createCommentsTemplate} from "./comments.js";
 
-export const createPopupTemplate = (card) => {
-  const {title, poster, description, rating, genres, releaseDate, duration, numberOfComments, comment} = card;
-  const genresTemplate = createGenresTemplate(genres);
-  const filmComments = new Array(comment.length).fill().map((value, index) => {
-    const {text, emotion, date, author} = comment[index];
-
-    return `<li class="film-details__comment">
-      <span class="film-details__comment-emoji">
-        <img src="./images/emoji/${emotion}.png" width="55" height="55" alt="emoji-smile">
-        </span>
-     <div>
-   <p class="film-details__comment-text">${text}</p>
-       <p class="film-details__comment-info">
-         <span class="film-details__comment-author">${author}</span>
-         <span class="film-details__comment-day">${date}</span>
-         <button class="film-details__comment-delete">Delete</button>
-       </p>
-     </div>
-   </li>`;
-  }).join(``);
-
-  return `<section class="film-details">
+export const createPopupTemplate = ({title, poster, fullDescription, rating, genres, releaseDate, duration, commentsCount}, comments) =>
+  `<section class="film-details"">
     <form class="film-details__inner" action="" method="get">
       <div class="film-details__top-container">
         <div class="film-details__close">
@@ -72,11 +51,11 @@ export const createPopupTemplate = (card) => {
               <tr class="film-details__row">
                 <td class="film-details__term">Genres</td>
                 <td class="film-details__cell">
-                  ${genresTemplate}
+                  ${createGenresTemplate(genres)}
               </tr>
             </table>
             <p class="film-details__film-description">
-              ${description}
+              ${fullDescription}
             </p>
           </div>
         </div>
@@ -91,10 +70,8 @@ export const createPopupTemplate = (card) => {
       </div>
       <div class="film-details__bottom-container">
         <section class="film-details__comments-wrap">
-          <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${numberOfComments}</span></h3>
-          <ul class="film-details__comments-list">
-          ${filmComments}
-          </ul>
+          <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${commentsCount}</span></h3>
+          ${createCommentsTemplate(comments)}
           <div class="film-details__new-comment">
             <div class="film-details__add-emoji-label"></div>
             <label class="film-details__comment-label">
@@ -123,4 +100,3 @@ export const createPopupTemplate = (card) => {
       </div>
     </form>
   </section>`;
-};

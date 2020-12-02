@@ -1,5 +1,5 @@
-import {films} from "../main.js";
+import {getRandomNumber} from "../mock/util.js";
 
 export const createStatisticsTemplate = () => {
-  return `<p>${films.length} movies inside</p>`;
+  return `<p>${getRandomNumber(1, 20)} movies inside</p>`;
 };
