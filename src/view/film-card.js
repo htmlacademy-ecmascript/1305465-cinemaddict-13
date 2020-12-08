@@ -2,18 +2,20 @@ import dayjs from "dayjs";
 
 const SHORT_DESCRIPTION_LENGTH = 139;
 
-export const createFilmCardTemplate = ({title, poster, fullDescription, rating, genres, releaseDate, duration, commentsCount, id}) => {
+export const createFilmCardTemplate = ({title, poster, description, rating, genres, releaseDate, duration, commentsCount, id}) => {
   const year = dayjs(releaseDate).format(`YYYY`);
+  const hours = dayjs(duration).format(`H[h] `);
+  const minutes = dayjs(duration).format(`MM[m]`);
   const genre = genres[0] ? genres[0] : ``;
-  const shortDescription = fullDescription.length > SHORT_DESCRIPTION_LENGTH
-    ? `${fullDescription.substr(0, SHORT_DESCRIPTION_LENGTH)}&hellip;`
-    : fullDescription;
+  const shortDescription = description.length > SHORT_DESCRIPTION_LENGTH
+    ? `${description.substr(0, SHORT_DESCRIPTION_LENGTH)}&hellip;`
+    : description;
   return `<article class="film-card" data-id="${id}">
     <h3 class="film-card__title">${title}</h3>
     <p class="film-card__rating">${rating}</p>
     <p class="film-card__info">
       <span class="film-card__year">${year}</span>
-      <span class="film-card__duration">${duration}</span>
+      <span class="film-card__duration">${hours}${minutes}</span>
       <span class="film-card__genre">${genre}</span>
     </p>
     <img src="${poster}" alt="${title}" class="film-card__poster">

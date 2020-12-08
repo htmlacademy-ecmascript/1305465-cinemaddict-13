@@ -9,6 +9,10 @@ const generateDate = () => {
   return dayjs().startOf(`year`).add(getRandomNumber(0, 300), `day`).format(`D MMMM YYYY`);
 };
 
+const generateTime = () => {
+  return dayjs().startOf(`day`).add(getRandomNumber(61, 300), `minute`);
+};
+
 const generateTitle = () => {
   const titles = [
     `The Dance of Life`,
@@ -20,9 +24,7 @@ const generateTitle = () => {
     `Made for Each Other`
   ];
 
-  const randomTitle = getRandomElement(titles);
-
-  return randomTitle;
+  return getRandomElement(titles);
 };
 
 const generatePoster = () => {
@@ -36,9 +38,7 @@ const generatePoster = () => {
     `./images/posters/the-man-with-the-golden-arm.jpg`
   ];
 
-  const randomPoster = getRandomElement(posters);
-
-  return randomPoster;
+  return getRandomElement(posters);
 };
 
 const generateDescription = () => {
@@ -56,9 +56,9 @@ const generateDescription = () => {
     `In rutrum ac purus sit amet tempus.`
   ];
 
-  const randomIndex = getRandomArray(descriptions);
-  randomIndex.length = getRandomNumber(1, 5);
-  return randomIndex;
+  const randomDescriptionArray = getRandomArray(descriptions);
+  randomDescriptionArray.length = getRandomNumber(1, 5);
+  return randomDescriptionArray;
 };
 
 const generateGenres = () => {
@@ -71,9 +71,7 @@ const generateGenres = () => {
     `Thriller`
   ];
 
-  const randomGenres = getRandomArray(genres);
-
-  return randomGenres.slice(0, 3);
+  return (getRandomArray(genres)).slice(0, 3);
 };
 
 export const generateComments = (numberOfComments = getRandomNumber(1, 5)) => {
@@ -132,15 +130,14 @@ export const generateFilmCard = () => {
     id: generateTitle() + generatePoster() + getRandomNumber(0, 100),
     title: generateTitle(),
     poster: generatePoster(),
-    fullDescription: generateDescription().toString(),
+    description: generateDescription().toString(),
     commentsCount: getRandomNumber(1, 9),
     rating: getRandomNumber(1, 5) + `.` + getRandomNumber(0, 9),
     releaseDate: generateDate(),
-    year: getRandomNumber(1950, 2020),
-    duration: getRandomNumber(1, 3) + `h ` + getRandomNumber(0, 9) + getRandomNumber(0, 9) + `m `,
+    duration: generateTime(),
     genres: generateGenres(),
     watched: isWatched,
-    watchlist: getWatchlistStatus(),
+    plannedToWatch: getWatchlistStatus(),
     favorite: getFavoritesStatus()
   };
 };

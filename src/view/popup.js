@@ -1,8 +1,11 @@
 import {createGenresTemplate} from "./genres.js";
 import {createCommentsTemplate} from "./comments.js";
+import dayjs from "dayjs";
 
-export const createPopupTemplate = ({title, poster, fullDescription, rating, genres, releaseDate, duration, commentsCount}, comments) =>
-  `<section class="film-details"">
+export const createPopupTemplate = ({title, poster, description, rating, genres, releaseDate, duration, commentsCount}, comments) => {
+  const hours = dayjs(duration).format(`H[h] `);
+  const minutes = dayjs(duration).format(`MM[m]`);
+  return `<section class="film-details"">
     <form class="film-details__inner" action="" method="get">
       <div class="film-details__top-container">
         <div class="film-details__close">
@@ -42,7 +45,7 @@ export const createPopupTemplate = ({title, poster, fullDescription, rating, gen
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Runtime</td>
-                <td class="film-details__cell">${duration}</td>
+                <td class="film-details__cell">${hours}${minutes}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Country</td>
@@ -55,7 +58,7 @@ export const createPopupTemplate = ({title, poster, fullDescription, rating, gen
               </tr>
             </table>
             <p class="film-details__film-description">
-              ${fullDescription}
+              ${description}
             </p>
           </div>
         </div>
@@ -100,3 +103,4 @@ export const createPopupTemplate = ({title, poster, fullDescription, rating, gen
       </div>
     </form>
   </section>`;
+};
