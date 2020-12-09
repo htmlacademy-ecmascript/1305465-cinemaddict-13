@@ -1,8 +1,9 @@
+import {createElement} from '../mock/util.js';
 import {createGenresTemplate} from "./genres.js";
 import {createCommentsTemplate} from "./comments.js";
 import dayjs from "dayjs";
 
-export const createPopupTemplate = ({title, poster, description, rating, genres, releaseDate, duration, commentsCount}, comments) => {
+const createPopupTemplate = ({title, poster, description, rating, genres, releaseDate, duration, commentsCount}, comments) => {
   const hours = dayjs(duration).format(`H[h] `);
   const minutes = dayjs(duration).format(`MM[m]`);
   return `<section class="film-details"">
@@ -104,3 +105,27 @@ export const createPopupTemplate = ({title, poster, description, rating, genres,
     </form>
   </section>`;
 };
+
+export default class PopupView {
+  constructor(cards, comments) {
+    this._cards = cards;
+    this._comments = comments;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createPopupTemplate(this._cards, this._comments);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
