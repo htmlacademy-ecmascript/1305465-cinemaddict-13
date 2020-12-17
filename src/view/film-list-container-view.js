@@ -1,16 +1,16 @@
-import {createElement} from "../mock/util.js";
+import {createElement} from "../utils.js";
 
-const createFilmSectionTemplate = () => {
-  return `<section class="films"></section>`;
+const createFilmListContainerTemplate = () => {
+  return `<div class="films-list__container"></div>`;
 };
 
-export default class FilmSectionView {
+export default class FilmsListContainerView {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createFilmSectionTemplate();
+    return createFilmListContainerTemplate();
   }
 
   getElement() {

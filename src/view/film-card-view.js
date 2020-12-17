@@ -1,16 +1,26 @@
-import dayjs from "dayjs";
-import {createElement} from '../mock/util.js';
+import {createElement, formatDate} from "../utils.js";
 
 const SHORT_DESCRIPTION_LENGTH = 139;
 
-const createFilmCardTemplate = ({title, poster, description, rating, genres, releaseDate, duration, commentsCount, id}) => {
-  const year = dayjs(releaseDate).format(`YYYY`);
-  const hours = dayjs(duration).format(`H[h] `);
-  const minutes = dayjs(duration).format(`MM[m]`);
+const createFilmCardTemplate = ({
+  title,
+  poster,
+  description,
+  rating,
+  genres,
+  releaseDate,
+  duration,
+  commentsCount,
+  id
+}) => {
+  const year = formatDate(releaseDate, `YYYY`);
+  const hours = formatDate(duration, `H[h] `);
+  const minutes = formatDate(duration, `MM[m]`);
   const genre = genres[0] ? genres[0] : ``;
-  const shortDescription = description.length > SHORT_DESCRIPTION_LENGTH
-    ? `${description.substr(0, SHORT_DESCRIPTION_LENGTH)}&hellip;`
-    : description;
+  const shortDescription =
+    description.length > SHORT_DESCRIPTION_LENGTH
+      ? `${description.substr(0, SHORT_DESCRIPTION_LENGTH)}&hellip;`
+      : description;
   return `<article class="film-card" data-id="${id}">
     <h3 class="film-card__title">${title}</h3>
     <p class="film-card__rating">${rating}</p>
@@ -30,7 +40,7 @@ const createFilmCardTemplate = ({title, poster, description, rating, genres, rel
   </article>`;
 };
 
-export default class CardListView {
+export default class FilmCardView {
   constructor(cards) {
     this._cards = cards;
     this._element = null;

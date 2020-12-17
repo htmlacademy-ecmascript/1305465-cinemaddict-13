@@ -1,11 +1,49 @@
-import {createElement} from '../mock/util.js';
-import {createGenresTemplate} from "./genres.js";
-import {createCommentsTemplate} from "./comments.js";
-import dayjs from "dayjs";
+import {createElement, formatDate} from "../utils.js";
 
-const createPopupTemplate = ({title, poster, description, rating, genres, releaseDate, duration, commentsCount}, comments) => {
-  const hours = dayjs(duration).format(`H[h] `);
-  const minutes = dayjs(duration).format(`MM[m]`);
+const createGenresTemplate = (genres) => {
+  return genres
+    .map((genre) => `<span class="film-details__genre">${genre}</span>`)
+    .join(``);
+};
+
+const createCommentsTemplate = (comments) => {
+  return `<ul class="film-details__comments-list">
+  ${comments
+    .map(
+        ({text, emotion, date, author}) =>
+          `<li class="film-details__comment">
+      <span class="film-details__comment-emoji">
+        <img src="./images/emoji/${emotion}.png" width="55" height="55" alt="emoji-${emotion}">
+        </span>
+        <div>
+        <p class="film-details__comment-text">${text}</p>
+        <p class="film-details__comment-info">
+        <span class="film-details__comment-author">${author}</span>
+        <span class="film-details__comment-day">${date}</span>
+        <button class="film-details__comment-delete">Delete</button>
+        </p>
+        </div>
+    </li>`
+    )
+    .join(``)}
+  </ul>`;
+};
+
+const createPopupTemplate = (
+    {
+      title,
+      poster,
+      description,
+      rating,
+      genres,
+      releaseDate,
+      duration,
+      commentsCount
+    },
+    comments
+) => {
+  const hours = formatDate(duration, `H[h] `);
+  const minutes = formatDate(duration, `MM[m]`);
   return `<section class="film-details"">
     <form class="film-details__inner" action="" method="get">
       <div class="film-details__top-container">
@@ -107,14 +145,14 @@ const createPopupTemplate = ({title, poster, description, rating, genres, releas
 };
 
 export default class PopupView {
-  constructor(cards, comments) {
-    this._cards = cards;
+  constructor(film, comments) {
+    this._film = film;
     this._comments = comments;
     this._element = null;
   }
 
   getTemplate() {
-    return createPopupTemplate(this._cards, this._comments);
+    return createPopupTemplate(this._film, this._comments);
   }
 
   getElement() {

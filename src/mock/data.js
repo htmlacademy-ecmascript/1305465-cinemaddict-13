@@ -1,16 +1,26 @@
 import dayjs from "dayjs";
 
-import {getRandomNumber} from "./util.js";
-import {getRandomArray} from "./util.js";
-import {getRandomElement} from "./util.js";
-import {getRandomInteger} from "./util.js";
+import {
+  getRandomNumber,
+  getRandomArray,
+  getRandomElement,
+  getRandomInteger
+} from "./mock-utils.js";
+
+const FILMS_COUNT = 5;
+const TOP_FILMS_COUNT = 2;
 
 const generateDate = () => {
-  return dayjs().startOf(`year`).add(getRandomNumber(0, 300), `day`).format(`D MMMM YYYY`);
+  return dayjs()
+    .startOf(`year`)
+    .add(getRandomNumber(0, 300), `day`)
+    .format(`D MMMM YYYY`);
 };
 
 const generateTime = () => {
-  return dayjs().startOf(`day`).add(getRandomNumber(61, 300), `minute`);
+  return dayjs()
+    .startOf(`day`)
+    .add(getRandomNumber(61, 300), `minute`);
 };
 
 const generateTitle = () => {
@@ -62,19 +72,12 @@ const generateDescription = () => {
 };
 
 const generateGenres = () => {
-  const genres = [
-    `Action`,
-    `Comedy`,
-    `Drama`,
-    `Horror`,
-    `Romance`,
-    `Thriller`
-  ];
+  const genres = [`Action`, `Comedy`, `Drama`, `Horror`, `Romance`, `Thriller`];
 
-  return (getRandomArray(genres)).slice(0, 3);
+  return getRandomArray(genres).slice(0, 3);
 };
 
-export const generateComments = (numberOfComments = getRandomNumber(1, 5)) => {
+const generateComments = (numberOfComments = getRandomNumber(1, 5)) => {
   const texts = [
     `Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.`,
     `Sed sed nisi sed augue convallis suscipit in sed felis.`,
@@ -82,12 +85,7 @@ export const generateComments = (numberOfComments = getRandomNumber(1, 5)) => {
     `Nunc fermentum tortor ac porta dapibus.`,
     `In rutrum ac purus sit amet tempus.`
   ];
-  const emotions = [
-    `smile`,
-    `sleeping`,
-    `puke`,
-    `angry`
-  ];
+  const emotions = [`smile`, `sleeping`, `puke`, `angry`];
   const authors = [
     `Karen Valby`,
     `David Bianculli`,
@@ -123,7 +121,7 @@ const getFavoritesStatus = () => {
   return isWatched ? Boolean(getRandomInteger()) : false;
 };
 
-export const generateFilmCard = () => {
+const generateFilmCard = () => {
   getWatchedStatus();
 
   return {
@@ -140,4 +138,17 @@ export const generateFilmCard = () => {
     plannedToWatch: getWatchlistStatus(),
     favorite: getFavoritesStatus()
   };
+};
+
+let films = new Array(FILMS_COUNT).fill().map(generateFilmCard);
+let topFilms = new Array(TOP_FILMS_COUNT).fill().map(generateFilmCard);
+let commentedFilms = new Array(TOP_FILMS_COUNT).fill().map(generateFilmCard);
+
+export {
+  generateFilmCard,
+  generateComments,
+  films,
+  topFilms,
+  commentedFilms,
+  FILMS_COUNT
 };

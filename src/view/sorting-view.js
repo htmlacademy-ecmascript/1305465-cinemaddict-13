@@ -1,4 +1,4 @@
-import {createElement} from '../mock/util.js';
+import {createElement} from "../utils.js";
 
 const createFilmSortingTemplate = () => {
   return `<ul class="sort">
