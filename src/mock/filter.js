@@ -1,4 +1,4 @@
-import {getRandomNumber} from "./util.js";
+import {getRandomNumber} from "./mock-utils.js";
 
 const getWatchedFilms = () => {
   return getRandomNumber(1, 20);

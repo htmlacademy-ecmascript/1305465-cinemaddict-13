@@ -1,8 +1,50 @@
-import {createGenresTemplate} from "./genres.js";
-import {createCommentsTemplate} from "./comments.js";
+import {createElement, formatDate} from "../utils.js";
 
-export const createPopupTemplate = ({title, poster, fullDescription, rating, genres, releaseDate, duration, commentsCount}, comments) =>
-  `<section class="film-details"">
+const createGenresTemplate = (genres) => {
+  return genres
+    .map((genre) => `<span class="film-details__genre">${genre}</span>`)
+    .join(``);
+};
+
+const createCommentsTemplate = (comments) => {
+  return `<ul class="film-details__comments-list">
+  ${comments
+    .map(
+        ({text, emotion, date, author}) =>
+          `<li class="film-details__comment">
+      <span class="film-details__comment-emoji">
+        <img src="./images/emoji/${emotion}.png" width="55" height="55" alt="emoji-${emotion}">
+        </span>
+        <div>
+        <p class="film-details__comment-text">${text}</p>
+        <p class="film-details__comment-info">
+        <span class="film-details__comment-author">${author}</span>
+        <span class="film-details__comment-day">${date}</span>
+        <button class="film-details__comment-delete">Delete</button>
+        </p>
+        </div>
+    </li>`
+    )
+    .join(``)}
+  </ul>`;
+};
+
+const createPopupTemplate = (
+    {
+      title,
+      poster,
+      description,
+      rating,
+      genres,
+      releaseDate,
+      duration,
+      commentsCount
+    },
+    comments
+) => {
+  const hours = formatDate(duration, `H[h] `);
+  const minutes = formatDate(duration, `MM[m]`);
+  return `<section class="film-details"">
     <form class="film-details__inner" action="" method="get">
       <div class="film-details__top-container">
         <div class="film-details__close">
@@ -42,7 +84,7 @@ export const createPopupTemplate = ({title, poster, fullDescription, rating, gen
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Runtime</td>
-                <td class="film-details__cell">${duration}</td>
+                <td class="film-details__cell">${hours}${minutes}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">Country</td>
@@ -55,7 +97,7 @@ export const createPopupTemplate = ({title, poster, fullDescription, rating, gen
               </tr>
             </table>
             <p class="film-details__film-description">
-              ${fullDescription}
+              ${description}
             </p>
           </div>
         </div>
@@ -100,3 +142,28 @@ export const createPopupTemplate = ({title, poster, fullDescription, rating, gen
       </div>
     </form>
   </section>`;
+};
+
+export default class PopupView {
+  constructor(film, comments) {
+    this._film = film;
+    this._comments = comments;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createPopupTemplate(this._film, this._comments);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
