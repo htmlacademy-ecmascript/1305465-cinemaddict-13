@@ -143,12 +143,13 @@ const generateFilmCard = () => {
 let films = new Array(FILMS_COUNT).fill().map(generateFilmCard);
 let topFilms = new Array(TOP_FILMS_COUNT).fill().map(generateFilmCard);
 let commentedFilms = new Array(TOP_FILMS_COUNT).fill().map(generateFilmCard);
+let addedFilms = new Array(FILMS_COUNT).fill().map(generateFilmCard);
 
 export {
-  generateFilmCard,
   generateComments,
   films,
   topFilms,
   commentedFilms,
+  addedFilms,
   FILMS_COUNT
 };
