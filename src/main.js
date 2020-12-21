@@ -76,7 +76,16 @@ const renderPopup = (currentFilm) => {
     popupCloseBtnElement.removeEventListener(`click`, onPopupCloseBtnClick);
   };
 
+  const onPopupEscClick = (evt) => {
+    if (evt.key === `Escape`) {
+      pageMainElement.removeChild(popupElement);
+      pageBodyElement.classList.remove(`hide-overflow`);
+    }
+    popupCloseBtnElement.removeEventListener(`click`, onPopupEscClick);
+  };
+
   popupCloseBtnElement.addEventListener(`click`, onPopupCloseBtnClick);
+  document.addEventListener(`keydown`, onPopupEscClick);
 };
 
 render(
