@@ -11,6 +11,7 @@ import StatisticsView from "./view/statistics-view.js";
 import PopupView from "./view/popup-view.js";
 import FilmsListContainerView from "./view/film-list-container-view.js";
 import ExtraFilmsListContainerView from "./view/extra-film-list-container-view.js";
+// import NoFilmsMessageView from "./view/no-films-message-view.js";
 import {
   generateComments,
   films,
@@ -98,16 +99,25 @@ render(
     RenderPosition.BEFOREEND,
     new MenuView(filterData).getElement()
 );
+
 render(
     pageMainElement,
     RenderPosition.BEFOREEND,
     new SortingView().getElement()
 );
+
 render(
     footerStatsElement,
     RenderPosition.BEFOREEND,
     new StatisticsView().getElement()
 );
+
+// Тут сообщение об отсутствии фильмов
+// render(
+//     pageMainElement,
+//     RenderPosition.BEFOREEND,
+//     new NoFilmsMessageView().getElement()
+// );
 
 render(pageMainElement, RenderPosition.BEFOREEND, filmSectionElement);
 render(filmSectionElement, RenderPosition.BEFOREEND, filmsListElement);
