@@ -11,7 +11,7 @@ import StatisticsView from "./view/statistics-view.js";
 import PopupView from "./view/popup-view.js";
 import FilmsListContainerView from "./view/film-list-container-view.js";
 import ExtraFilmsListContainerView from "./view/extra-film-list-container-view.js";
-// import NoFilmsMessageView from "./view/no-films-message-view.js";
+import NoFilmsMessageView from "./view/no-films-message-view.js";
 import {
   generateComments,
   films,
@@ -23,6 +23,7 @@ import {
 import {generateFilterData} from "./mock/filter.js";
 
 const MAX_FILMS_COUNT = 20;
+const KEYCODE_ESC = 27;
 
 const filterData = generateFilterData();
 
@@ -58,6 +59,21 @@ const findFilm = (filmsArray, filmId) => {
   });
 };
 
+const addListenerToFilmsList = (container, filmsList) => {
+  container.addEventListener(`click`, (evt) => {
+    let target = evt.target;
+    if (
+      target.classList.contains(`film-card__poster`) ||
+      target.classList.contains(`film-card__title`) ||
+      target.classList.contains(`film-card__comments`)
+    ) {
+      const activeFilm = findFilm(filmsList, target.parentElement.dataset.id);
+
+      renderPopup(activeFilm);
+    }
+  });
+};
+
 const renderPopup = (currentFilm) => {
   const popupElement = new PopupView(
       currentFilm,
@@ -75,14 +91,13 @@ const renderPopup = (currentFilm) => {
     pageMainElement.removeChild(popupElement);
     pageBodyElement.classList.remove(`hide-overflow`);
     popupCloseBtnElement.removeEventListener(`click`, onPopupCloseBtnClick);
+    popupCloseBtnElement.removeEventListener(`keydown`, onPopupEscClick);
   };
 
   const onPopupEscClick = (evt) => {
-    if (evt.key === `Escape`) {
-      pageMainElement.removeChild(popupElement);
-      pageBodyElement.classList.remove(`hide-overflow`);
+    if (evt.keyCode === KEYCODE_ESC) {
+      onPopupCloseBtnClick(evt);
     }
-    popupCloseBtnElement.removeEventListener(`click`, onPopupEscClick);
   };
 
   popupCloseBtnElement.addEventListener(`click`, onPopupCloseBtnClick);
@@ -100,11 +115,13 @@ render(
     new MenuView(filterData).getElement()
 );
 
-render(
-    pageMainElement,
-    RenderPosition.BEFOREEND,
-    new SortingView().getElement()
-);
+if (films.length !== 0) {
+  render(
+      pageMainElement,
+      RenderPosition.BEFOREEND,
+      new SortingView().getElement()
+  );
+}
 
 render(
     footerStatsElement,
@@ -113,11 +130,13 @@ render(
 );
 
 // Тут сообщение об отсутствии фильмов
-// render(
-//     pageMainElement,
-//     RenderPosition.BEFOREEND,
-//     new NoFilmsMessageView().getElement()
-// );
+if (films.length === 0) {
+  render(
+      filmsListElement,
+      RenderPosition.BEFOREEND,
+      new NoFilmsMessageView().getElement()
+  );
+}
 
 render(pageMainElement, RenderPosition.BEFOREEND, filmSectionElement);
 render(filmSectionElement, RenderPosition.BEFOREEND, filmsListElement);
@@ -135,55 +154,19 @@ films.forEach((film) => {
   renderFilm(filmsListContainerElement, `AFTERBEGIN`, film);
 });
 
-filmsListContainerElement.addEventListener(`click`, (evt) => {
-  let target = evt.target;
-  if (
-    target.classList.contains(`film-card__poster`) ||
-    target.classList.contains(`film-card__title`) ||
-    target.classList.contains(`film-card__comments`)
-  ) {
-    const activeFilm = findFilm(films, target.parentElement.dataset.id);
-
-    renderPopup(activeFilm);
-  }
-});
+addListenerToFilmsList(filmsListContainerElement, films);
 
 topFilms.forEach((topFilm) => {
   renderFilm(topRatedContainerElement, `AFTERBEGIN`, topFilm);
 });
 
-topRatedContainerElement.addEventListener(`click`, (evt) => {
-  let target = evt.target;
-  if (
-    target.classList.contains(`film-card__poster`) ||
-    target.classList.contains(`film-card__title`) ||
-    target.classList.contains(`film-card__comments`)
-  ) {
-    const activeFilm = findFilm(topFilms, target.parentElement.dataset.id);
-
-    renderPopup(activeFilm);
-  }
-});
+addListenerToFilmsList(topRatedContainerElement, topFilms);
 
 commentedFilms.forEach((commentedFilm) => {
   renderFilm(mostCommentedContainerElement, `BEFOREEND`, commentedFilm);
 });
 
-mostCommentedContainerElement.addEventListener(`click`, (evt) => {
-  let target = evt.target;
-  if (
-    target.classList.contains(`film-card__poster`) ||
-    target.classList.contains(`film-card__title`) ||
-    target.classList.contains(`film-card__comments`)
-  ) {
-    const activeFilm = findFilm(
-        commentedFilms,
-        target.parentElement.dataset.id
-    );
-
-    renderPopup(activeFilm);
-  }
-});
+addListenerToFilmsList(mostCommentedContainerElement, commentedFilms);
 
 if (films.length < MAX_FILMS_COUNT) {
   let renderedFilmsCount = FILMS_COUNT;
