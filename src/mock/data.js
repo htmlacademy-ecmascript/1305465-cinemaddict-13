@@ -7,6 +7,7 @@ import {
   getRandomInteger
 } from "./mock-utils.js";
 
+const MAX_FILMS_COUNT = 20;
 const FILMS_COUNT = 5;
 const TOP_FILMS_COUNT = 2;
 
@@ -140,16 +141,19 @@ const generateFilmCard = () => {
   };
 };
 
-let films = new Array(FILMS_COUNT).fill().map(generateFilmCard);
-let topFilms = new Array(TOP_FILMS_COUNT).fill().map(generateFilmCard);
-let commentedFilms = new Array(TOP_FILMS_COUNT).fill().map(generateFilmCard);
-let addedFilms = new Array(FILMS_COUNT).fill().map(generateFilmCard);
+let films = new Array(MAX_FILMS_COUNT).fill().map(generateFilmCard);
+let topFilms = films
+  .sort((a, b) => b.rating - a.rating)
+  .slice(0, TOP_FILMS_COUNT);
+let commentedFilms = films
+  .sort((a, b) => b.commentsCount - a.commentsCount)
+  .slice(0, TOP_FILMS_COUNT);
 
 export {
   generateComments,
   films,
   topFilms,
   commentedFilms,
-  addedFilms,
-  FILMS_COUNT
+  FILMS_COUNT,
+  MAX_FILMS_COUNT
 };

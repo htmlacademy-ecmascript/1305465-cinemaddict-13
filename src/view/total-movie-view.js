@@ -1,17 +1,17 @@
 import {createElement} from "../utils.js";
 
-const createExtraFilmListContainerTemplate = () => {
-  return `<div class="films-list__container">
-    </div>`;
+const createStatisticsTemplate = (films) => {
+  return `<p>${films} movies inside</p>`;
 };
 
-export default class ExtraFilmsListContainerView {
-  constructor() {
+export default class TotalMovieView {
+  constructor(films) {
     this._element = null;
+    this._films = films;
   }
 
   getTemplate() {
-    return createExtraFilmListContainerTemplate();
+    return createStatisticsTemplate(this._films);
   }
 
   getElement() {
