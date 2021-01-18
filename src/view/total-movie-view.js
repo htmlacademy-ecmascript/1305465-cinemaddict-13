@@ -1,17 +1,17 @@
 import {createElement} from "../utils.js";
-import {getRandomNumber} from "../mock/mock-utils.js";
 
-const createStatisticsTemplate = () => {
-  return `<p>${getRandomNumber(1, 20)} movies inside</p>`;
+const createStatisticsTemplate = (films) => {
+  return `<p>${films} movies inside</p>`;
 };
 
-export default class StatisticsView {
-  constructor() {
+export default class TotalMovieView {
+  constructor(films) {
     this._element = null;
+    this._films = films;
   }
 
   getTemplate() {
-    return createStatisticsTemplate();
+    return createStatisticsTemplate(this._films);
   }
 
   getElement() {

@@ -1,18 +1,9 @@
-import {getRandomNumber} from "./mock-utils.js";
+const getWatchedFilms = (films) => films.filter((film) => film.watched);
+const getWatchlistFilms = (films) =>
+  films.filter((film) => film.plannedToWatch);
+const getFavoriteFilms = (films) => films.filter((film) => film.favorite);
 
-const getWatchedFilms = () => {
-  return getRandomNumber(1, 20);
-};
-
-const getWatchlistFilms = () => {
-  return getRandomNumber(1, 20);
-};
-
-const getFavoriteFilms = () => {
-  return getRandomNumber(1, 20);
-};
-
-const generateFilterData = () => {
+const generateFilterData = (films) => {
   return [
     {
       label: `All movies`,
@@ -23,19 +14,26 @@ const generateFilterData = () => {
       label: `History`,
       isActive: false,
       href: `history`,
-      count: getWatchedFilms()
+      count:
+        getWatchedFilms(films).length >= 1 ? getWatchedFilms(films).length : `0`
     },
     {
       label: `Watchlist`,
       isActive: false,
       href: `watchlist`,
-      count: getWatchlistFilms()
+      count:
+        getWatchlistFilms(films).length >= 1
+          ? getWatchlistFilms(films).length
+          : `0`
     },
     {
       label: `Favorites`,
       isActive: false,
       href: `favorites`,
-      count: getFavoriteFilms()
+      count:
+        getFavoriteFilms(films).length >= 1
+          ? getFavoriteFilms(films).length
+          : `0`
     }
   ];
 };
