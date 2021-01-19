@@ -1,4 +1,4 @@
-import {createElement} from "../utils/common.js";
+import AbstractView from "./abstract-view.js";
 
 export const variants = {
   main: {
@@ -32,25 +32,13 @@ const createFilmListTemplate = (variant) => {
     </section>`;
 };
 
-export default class FilmsListView {
+export default class FilmsListView extends AbstractView {
   constructor(variant) {
-    this._element = null;
+    super();
     this._variant = variant;
   }
 
-  getTemplate() {
+  _getTemplate() {
     return createFilmListTemplate(this._variant);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

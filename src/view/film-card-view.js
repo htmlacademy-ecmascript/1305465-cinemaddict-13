@@ -1,4 +1,5 @@
-import {createElement, formatDate} from "../utils/common.js";
+import AbstractView from "./abstract-view.js";
+import {formatDate} from "../utils/common.js";
 
 const SHORT_DESCRIPTION_LENGTH = 139;
 
@@ -40,25 +41,13 @@ const createFilmCardTemplate = ({
   </article>`;
 };
 
-export default class FilmCardView {
+export default class FilmCardView extends AbstractView {
   constructor(cards) {
+    super();
     this._cards = cards;
-    this._element = null;
   }
 
-  getTemplate() {
+  _getTemplate() {
     return createFilmCardTemplate(this._cards);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

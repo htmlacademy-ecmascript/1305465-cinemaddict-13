@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import AbstractView from "../view/abstract-view.js";
 
 const createElement = (template) => {
   const newElement = document.createElement(`div`);
@@ -12,13 +13,20 @@ const RenderPosition = {
   BEFOREEND: `beforeend`
 };
 
-const render = (container, place, element) => {
+const render = (container, place, child) => {
+  if (container instanceof AbstractView) {
+    container = container.element;
+  }
+
+  if (child instanceof AbstractView) {
+    child = child.element;
+  }
   switch (place) {
     case RenderPosition.AFTERBEGIN:
-      container.prepend(element);
+      container.prepend(child);
       break;
     case RenderPosition.BEFOREEND:
-      container.append(element);
+      container.append(child);
       break;
     default:
       throw new Error(`place is not valid`);

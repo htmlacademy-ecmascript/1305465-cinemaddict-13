@@ -25,7 +25,7 @@ const escKey = `Esc`;
 const filterData = generateFilterData(films);
 
 const renderFilm = (container, position, film) =>
-  render(container, position, new FilmCardView(film).getElement());
+  render(container, position, new FilmCardView(film).element);
 
 const pageHeaderElement = document.querySelector(`.header`);
 const pageBodyElement = document.querySelector(`body`);
@@ -35,14 +35,14 @@ const footerStatsElement = pageFooterElement.querySelector(
     `.footer__statistics`
 );
 
-const filmSectionElement = new FilmSectionView().getElement();
-const showMoreFilmsBtnElement = new ShowMoreButtonView().getElement();
-const filmsListElement = new FilmsListView(`main`).getElement();
-const filmsListContainerElement = new FilmsListContainerView().getElement();
-const mostCommentedListElement = new FilmsListView(`commented`).getElement();
-const topRatedListElement = new FilmsListView(`rated`).getElement();
-const mostCommentedContainerElement = new FilmsListContainerView().getElement();
-const topRatedContainerElement = new FilmsListContainerView().getElement();
+const filmSectionElement = new FilmSectionView().element;
+const showMoreFilmsBtnElement = new ShowMoreButtonView().element;
+const filmsListElement = new FilmsListView(`main`).element;
+const filmsListContainerElement = new FilmsListContainerView().element;
+const mostCommentedListElement = new FilmsListView(`commented`).element;
+const topRatedListElement = new FilmsListView(`rated`).element;
+const mostCommentedContainerElement = new FilmsListContainerView().element;
+const topRatedContainerElement = new FilmsListContainerView().element;
 
 const findFilm = (filmsArray, filmId) => {
   return filmsArray.find((film) => {
@@ -66,10 +66,7 @@ const addListenerToFilmsList = (container, filmsList) => {
 };
 
 const renderPopup = (currentFilm) => {
-  const popupElement = new PopupView(
-      currentFilm,
-      generateComments()
-  ).getElement();
+  const popupElement = new PopupView(currentFilm, generateComments()).element;
   pageMainElement.appendChild(popupElement);
   pageBodyElement.classList.add(`hide-overflow`);
 
@@ -98,18 +95,18 @@ const renderPopup = (currentFilm) => {
 render(
     pageHeaderElement,
     RenderPosition.BEFOREEND,
-    new UserProfileView().getElement()
+    new UserProfileView().element
 );
 render(
     pageMainElement,
     RenderPosition.BEFOREEND,
-    new MenuView(filterData).getElement()
+    new MenuView(filterData).element
 );
 
 render(
     footerStatsElement,
     RenderPosition.BEFOREEND,
-    new TotalMovieView(films.length).getElement()
+    new TotalMovieView(films.length).element
 );
 
 // Тут сообщение об отсутствии фильмов
@@ -117,7 +114,7 @@ if (films.length === 0) {
   render(
       filmsListElement,
       RenderPosition.BEFOREEND,
-      new NoFilmsMessageView().getElement()
+      new NoFilmsMessageView().element
   );
 }
 render(pageMainElement, RenderPosition.BEFOREEND, filmSectionElement);
@@ -127,7 +124,7 @@ if (films.length !== 0) {
   render(
       filmsListElement,
       RenderPosition.AFTERBEGIN,
-      new SortingView().getElement()
+      new SortingView().element
   );
   render(filmsListElement, RenderPosition.BEFOREEND, filmsListContainerElement);
   render(filmSectionElement, RenderPosition.BEFOREEND, topRatedListElement);
