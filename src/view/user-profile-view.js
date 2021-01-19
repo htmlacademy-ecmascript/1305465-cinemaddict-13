@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import {createElement} from "../utils/common.js";
 
 const createUserProfileTemplate = () => {
   return `<section class="header__profile profile">

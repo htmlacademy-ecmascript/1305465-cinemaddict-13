@@ -1,4 +1,4 @@
-import {createElement, formatDate} from "../utils.js";
+import {createElement, formatDate} from "../utils/common.js";
 
 const createGenresTemplate = (genres) => {
   return genres

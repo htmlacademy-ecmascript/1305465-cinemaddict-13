@@ -1,4 +1,4 @@
-import {createElement, formatDate} from "../utils.js";
+import {createElement, formatDate} from "../utils/common.js";
 
 const SHORT_DESCRIPTION_LENGTH = 139;
 

@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import {createElement} from "../utils/common.js";
 
 const createFilmListContainerTemplate = () => {
   return `<div class="films-list__container"></div>`;

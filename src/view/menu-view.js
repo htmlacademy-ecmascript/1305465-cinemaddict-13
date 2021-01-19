@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import {createElement} from "../utils/common.js";
 
 const createMenuTemplate = (links) => {
   return `<nav class="main-navigation">
