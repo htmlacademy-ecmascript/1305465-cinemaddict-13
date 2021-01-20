@@ -1,4 +1,4 @@
-import {createElement} from "../utils/common.js";
+import {createElement} from "../utils/render.js";
 
 export default class AbstractView {
   constructor() {
@@ -7,13 +7,14 @@ export default class AbstractView {
     }
 
     this._element = null;
+    this._callback = {};
   }
 
   _getTemplate() {
     throw new Error(`Abstract method not implemented: getTemplate`);
   }
 
-  get element() {
+  getElement() {
     if (!this._element) {
       this._element = createElement(this._getTemplate());
     }

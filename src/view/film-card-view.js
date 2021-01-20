@@ -1,5 +1,5 @@
 import AbstractView from "./abstract-view.js";
-import {formatDate} from "../utils/common.js";
+import {formatDate} from "../utils/render.js";
 
 const SHORT_DESCRIPTION_LENGTH = 139;
 
@@ -45,9 +45,36 @@ export default class FilmCardView extends AbstractView {
   constructor(cards) {
     super();
     this._cards = cards;
+    this._openPopupHandler = this._openPopupHandler.bind(this);
   }
 
   _getTemplate() {
     return createFilmCardTemplate(this._cards);
+  }
+
+  _openPopupHandler(evt) {
+    evt.preventDefault();
+    this._callback.click();
+  }
+
+  setPosterClickHandler(callback) {
+    this._callback.click = callback;
+    this.getElement()
+      .querySelector(`.film-card__poster`)
+      .addEventListener(`click`, this._openPopupHandler);
+  }
+
+  setCommentsClickHandler(callback) {
+    this._callback.click = callback;
+    this.getElement()
+      .querySelector(`.film-card__comments`)
+      .addEventListener(`click`, this._openPopupHandler);
+  }
+
+  setTitleClickHandler(callback) {
+    this._callback.click = callback;
+    this.getElement()
+      .querySelector(`.film-card__title`)
+      .addEventListener(`click`, this._openPopupHandler);
   }
 }
