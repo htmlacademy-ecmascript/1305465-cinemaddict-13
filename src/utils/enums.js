@@ -1,4 +1,4 @@
-export const Button = {
+export const keyCodes = {
   ESCAPE: `Escape`,
   ESC: `Esc`
 };

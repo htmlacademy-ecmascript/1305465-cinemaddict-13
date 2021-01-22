@@ -24,7 +24,7 @@ import {
   FILMS_COUNT
 } from "./mock/data.js";
 import {generateFilterData} from "./utils/filter.js";
-import {Button} from "./const.js";
+import {keyCodes} from "./utils/enums.js";
 
 const filterData = generateFilterData(films);
 const showMoreFilmsBtnElement = new ShowMoreButtonView();
@@ -66,7 +66,7 @@ const renderFilm = (container, position, film) => {
   };
 
   const onPopupEscPress = (evt) => {
-    if (evt.key === Button.ESCAPE || evt.key === Button.ESC) {
+    if (evt.key === keyCodes.ESCAPE || evt.key === keyCodes.ESC) {
       closePopup();
     }
   };
